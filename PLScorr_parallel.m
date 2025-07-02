@@ -70,11 +70,11 @@ if size(X,1) ~= size(Y,1)
     error('Error, inputs must have same number of rows!')
 end
 
-if any(isnan(X(:))) || any(isinf(X(:))) == 1
+if any(isnan(X(:))) || any(isinf(X(:)))
     error('Matrix X has NaN or Inf')
 end
 
-if any(isnan(Y(:))) || any(isinf(Y(:))) == 1
+if any(isnan(Y(:))) || any(isinf(Y(:)))
     error('Matrix Y has NaN or Inf')
 end
 
@@ -117,7 +117,7 @@ end
             error('Error, X and Xremove need to have same number of rows')
         end
         % check for missing data
-        if any(isnan(opts.Xremove(:))) || any(isinf(opts.Xremove(:))) == 1
+        if any(isnan(opts.Xremove(:))) || any(isinf(opts.Xremove(:)))
             error('Matrix Xremove has NaN or Inf')
         end
     end
@@ -132,7 +132,7 @@ end
             error('Error, Y and Yremove need to have same number of rows')
         end
         % check for missing data
-        if any(isnan(opts.Yremove(:))) || any(isinf(opts.Yremove(:))) == 1
+        if any(isnan(opts.Yremove(:))) || any(isinf(opts.Yremove(:)))
             error('Matrix Yremove has NaN or Inf')
         end
     end
@@ -370,7 +370,7 @@ function rotatemat=rri_bootprocrust(origlv,bootlv,origlv2,bootlv2)
 temp=origlv'*bootlv;
 
 %orthogonalze space
-[V,W,U]=svd(temp);
+[V,~,U]=svd(temp);
 
 %determine procrustean transform
 rotatemat1=U*V';
@@ -380,7 +380,7 @@ clear tmp V W U
 %define coordinate space between original and bootstrap LVs
 temp=origlv2'*bootlv2;
 %orthogonalze space
-[V,W,U]=svd(temp);
+[V,~,U]=svd(temp);
 %determine procrustean transform
 rotatemat2=U*V';
 
@@ -490,7 +490,6 @@ parfor iter_perm = 1:opts.nPerm
     if FlagDim ==1
         tmp1 = Up;
         tmp2 = Vp;
-        clear Up Vp
         Up = tmp2;
         Vp = tmp1;
     end
@@ -553,7 +552,6 @@ parfor iter_boot = 1:opts.nBoot
     if FlagDim ==1
         tmp1 = Ub;
         tmp2 = Vb;
-        clear Ub Vb
         Ub = tmp2;
         Vb = tmp1;
     end
